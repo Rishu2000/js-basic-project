@@ -6,8 +6,16 @@ const app = express();
 const port = 5000;
 const todos = ["Milk","Curd","Sugar"];
 
+app.use((req,res,next) => {               //Custom Middleware.
+  console.log("First middleware");
+  next();
+});
 app.use(morgan("dev"));
 app.use("/",root);
+app.use((req,res,next) => {
+  console.log("Second Middleware.");
+  next();
+});
 
 app.listen(port,() => {
   console.log(`Server started at port ${port}.`);
