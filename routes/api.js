@@ -10,6 +10,11 @@ app.get("/",(req,res) => {
   res.json("Welcome to API.");
 }
 });
+
+app.post("/", express.json(), (req,res) =>{
+  res.json(req.body);
+});
+
 app.use("/users/",users);
 app.use("/todos/",todos);
 
