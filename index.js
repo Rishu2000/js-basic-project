@@ -12,10 +12,6 @@ app.use((req,res,next) => {               //Custom Middleware.
 });
 app.use(morgan("dev"));
 app.use("/",root);
-app.use((req,res,next) => {
-  console.log("Second Middleware.");
-  next();
-});
 
 app.listen(port,() => {
   console.log(`Server started at port ${port}.`);
