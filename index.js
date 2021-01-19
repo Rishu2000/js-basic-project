@@ -1,12 +1,15 @@
 //You need to type "npm run rishav" not "npm rishav"
 const express = require("express");
 const morgan = require("morgan");
+const session = require("express-session");
 const root = require("./routes/root");
 const app = express();
 const port = 5000;
-const todos = ["Milk","Curd","Sugar"];
 
 app.use(express.json());
+app.use(session({
+  secret:"corona"
+}));
 
 app.use((req,res,next) => {               //Custom Middleware.
   console.log("First middleware");

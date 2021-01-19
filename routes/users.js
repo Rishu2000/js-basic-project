@@ -3,7 +3,7 @@ const users = require("../constants/users");
 const app = express.Router();
 
 app.get("/",(req,res) => {
-  let Authentacation = false;
+  let {Authentacation} = req.session;
   if (Authentacation) {
   res.json(users.map((n,userID) => {
     const a = {userID,...n};
@@ -15,10 +15,12 @@ app.get("/",(req,res) => {
   }
 });
 app.get("/login",(req,res) => {
+  let {Authentacation} = req.session;
   console.log("get");
   res.json({Authentacation});
 });
 app.post("/login",(req,res) => {
+  let {Authentacation} = req.session;
   const {Username,Password} = req.body;
   console.log("post");
   if (!Username || !Password) {
@@ -27,11 +29,14 @@ app.post("/login",(req,res) => {
   }else{
     const matched = users.filter(u => u.Username.toLowerCase() === Username.toLowerCase() && u.Password === Password);
     if (matched.length === 1) {
-      Authentacation = true;
+      const user = {...matched[0]};
+      delete user.Password;
+      req.session.Authentacation = user;
       res.json({Success : true});
     }else if (matched.length === 0) {
-      Authentacation = false;
+      req.session.destroy(() => {
       res.status(401).json("Oops Bad Credentials");
+      });
     }
   }
 });
