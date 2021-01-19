@@ -67,6 +67,10 @@ app.post("/login",(req,res) => {
       req.session.destroy(() => {
       res.status(401).json("Oops Bad Credentials");
       });
+    }else if (matched.length > 1) {
+      req.session.destroy(() => {
+        res.status(500).json("Lot of Users has been found.");
+      });
     }
   }
 });
