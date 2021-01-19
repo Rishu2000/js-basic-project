@@ -1,16 +1,20 @@
 const express = require("express");
 const users = require("../constants/users");
 const app = express.Router();
-let Authentacation = true;
+let Authentacation = false;
 
 app.use(express.json());
 
 app.get("/",(req,res) => {
+  if (Authentacation) {
   res.json(users.map((n,userID) => {
     const a = {userID,...n};
     delete a.Password;
     return a;
   }));
+  }else{
+    res.status(403).json("Please login to see.");
+  }
 });
 app.get("/login",(req,res) => {
   console.log("get");
