@@ -14,6 +14,36 @@ app.get("/",(req,res) => {
     res.status(403).json("Please login to see.");
   }
 });
+app.post("/",(req,res) => {
+  const {
+    Username,
+    Name,
+    Password,
+    LinkedIn
+  } = req.body;
+  if (!Username || !Name || !Password) {
+    res.status(400).json({
+      Success:false,
+      Message:"Please Enter at least Username, Name, and Password."
+    });
+  }else if (Username.trim().length < 4 || Name.trim().length < 4 || Password.trim().length < 4) {
+    res.status(400).json({
+      Success:false,
+      Message:"Username, Name, and Password should contain at least 3 character."
+    });
+  }else{
+    users.push({
+    Username,
+    Name,
+    Password,
+    LinkedIn
+    });
+    res.status(201).json({
+      Success:true,
+      Message:"New User has been created."
+    });
+  }
+});
 app.get("/login",(req,res) => {
   let {Authentacation} = req.session;
   console.log("get");
