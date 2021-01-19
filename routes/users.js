@@ -2,18 +2,22 @@ const express = require("express");
 const users = require("../constants/users");
 const app = express.Router();
 
+app.use((req,res,next) => {
+    let {Authentacation} = req.session;
+  if (Authentacation || (req.path === "/" && req.method === "POST") || (req.path === "/login" && req.method === "POST")) {
+    next();
+  }else{
+    res.status(403).json("Please login to see.");
+  }
+});
 app.get("/",(req,res) => {
-  let {Authentacation} = req.session;
-  if (Authentacation) {
   res.json(users.map((n,userID) => {
     const a = {userID,...n};
     delete a.Password;
     return a;
   }));
-  }else{
-    res.status(403).json("Please login to see.");
   }
-});
+);
 app.post("/",(req,res) => {
   const {
     Username,
