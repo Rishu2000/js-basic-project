@@ -71,7 +71,7 @@ app.post("/login",(req,res) => {
   }
 });
 app.post("/logout",(req,res) => {
-  res.destroy();
+  req.session.destroy();
   res.json({Success:true});
 });
 app.get("/:id",(req,res) => {
