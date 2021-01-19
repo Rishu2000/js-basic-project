@@ -32,6 +32,12 @@ app.post("/",(req,res) => {
       Message:"Username, Name, and Password should contain at least 3 character."
     });
   }else{
+    const match = users.filter(u => u.Username === Username);
+    if (match.length > 0) {
+      res.status(409).json({
+        Success:false,
+        Message:"User already exists"});
+    }else{
     users.push({
     Username,
     Name,
@@ -42,6 +48,7 @@ app.post("/",(req,res) => {
       Success:true,
       Message:"New User has been created."
     });
+    }
   }
 });
 app.get("/login",(req,res) => {
