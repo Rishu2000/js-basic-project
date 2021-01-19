@@ -8,7 +8,9 @@ const port = 5000;
 
 app.use(express.json());
 app.use(session({
-  secret:"corona"
+  secret:"corona",
+  resave:false,
+  saveUninitialized:false
 }));
 
 app.use((req,res,next) => {               //Custom Middleware.
