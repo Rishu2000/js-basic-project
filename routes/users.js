@@ -95,5 +95,14 @@ app.get("/:id",(req,res) => {
     res.status(404).json("Error, Can not find User.")
   }
 });
+app.delete("/:id",(req,res) => {
+  const param = req.params.id;
+  if (users[param] && users[param].Name) {
+    users[param] = {};
+    res.status(204).json();
+  }else{
+    res.status(404).json("User not found.");
+  }
+})
 
 module.exports = app;
