@@ -40,6 +40,10 @@ app.post("/login",(req,res) => {
     }
   }
 });
+app.post("/logout",(req,res) => {
+  res.destroy();
+  res.json({Success:true});
+});
 app.get("/:id",(req,res) => {
   const userID = +req.params.id;
   if (users[userID]) {
